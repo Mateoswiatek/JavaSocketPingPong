@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer {
-    public static final int PORT = 2345;
+    public static final int PORT = 2346;
     private ServerSocket socket;
 
     public EchoServer(){
@@ -24,13 +24,15 @@ public class EchoServer {
     }
     public void waitForClients(){
         System.out.println("Oczekiwanie na polaczenie...");
+        int i = 0;
         try{
             while(true){
                 Socket client = socket.accept();
                 System.out.println("Zaakceptowano od: " + client.getInetAddress());
                 BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
-                new NetCommunicator(client, in, out).start(); // Tworzenie i odrazu uruchamianie wątku.
+                new NetCommunicator(client, in, out, i).start(); // Tworzenie i odrazu uruchamianie wątku.
+                i++;
             }
         } catch(Exception e){
             System.err.println(e + ". Exiting...");

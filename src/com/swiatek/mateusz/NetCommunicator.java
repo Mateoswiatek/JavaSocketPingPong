@@ -9,12 +9,14 @@ public class NetCommunicator extends Thread {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private int id;
 
 
-    public NetCommunicator(Socket client, BufferedReader in, PrintWriter out) {
+    public NetCommunicator(Socket client, BufferedReader in, PrintWriter out, int id) {
         this.in = in;
         this.out = out;
         this.socket = client;
+        this.id = id;
     }
 
     @Override
@@ -32,7 +34,11 @@ public class NetCommunicator extends Thread {
             in.close();
             out.close();
             socket.close();
-        } catch(IOException e){
+            System.out.println("spi watek: " + id );
+            Thread.yield();
+            Thread.sleep(5000);
+            System.out.println("obudzil sie: " + id );
+        } catch(Exception e){
             System.err.println(e + " Exiting");
         }
     }
